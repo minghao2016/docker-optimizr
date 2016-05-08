@@ -22,7 +22,6 @@ RUN install2.r --error \
 COPY gurobi6.5.1_linux64.tar.gz /
 RUN tar -xzf /gurobi6.5.1_linux64.tar.gz -C /opt/ \
   && install2.r --error \
-    /opt/gurobi651/linux64/R/gurobi_6.5-1_R_x86_64-unknown-linux-gnu.tar.gz
-ENV GUROBI_HOME=/opt/gurobi651/linux64 \
-  PATH=$PATH:$GUROBI_HOME/bin \
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GUROBI_HOME/lib
+    /opt/gurobi651/linux64/R/gurobi_6.5-1_R_x86_64-unknown-linux-gnu.tar.gz \
+  && ln -s /opt/gurobi651/linux64/lib/libgurobi65.so /lib/libgurobi65.so
+ENV PATH $PATH:/opt/gurobi651/linux64/bin"

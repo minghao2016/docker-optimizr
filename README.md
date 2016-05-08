@@ -28,18 +28,18 @@ Now point your browser to the IP address given by `docker-machine ip`, being sur
 
 ## Gurobi license
 
-[Gurobi](http://www.gurobi.com/) is an extremely powerful commercial solver for linear and quadratic programming. It is significantly faster than existing open source solvers, however, you'll need a license to use it. Fortunately, Gurobi does offer free academic licenses for those eligable. To get a license, follow the instructions on the [Gurobi website](http://www.gurobi.com/downloads/download-center) and download a `gurobi.lic` file.
+[Gurobi](http://www.gurobi.com/) is an extremely powerful commercial solver for linear and quadratic programming. It is significantly faster than existing open source solvers, however, you'll need a license to use it. Fortunately, Gurobi does offer free academic licenses for those eligible. Note that a Gurobi license is only good for a single machine and therefore you'll need a new one for every Docker container you create. So, if you do go to the trouble of setting up Gurobi on a Docker container, you'll probably want to keep that container around to avoid having to get a new license.
 
-After you've started an `optimizr` container, get its container ID using `docker ps`, then load the license file into the container with:
-
-```
-docker cp /path/to/license/gurobi.lic <container-id>:/opt/gurobi651/
-```
-
-For example, if the container ID is `fda2e7451a56` and I store my `gurobi.lic` in my home directory, I would use:
+To get a license, follow the instructions on the [Gurobi website](http://www.gurobi.com/downloads/download-center). Now, look at your [current licenses](https://user.gurobi.com/download/licenses/current) and you'll see a `grbgetkey` command listed like:
 
 ```
-docker cp ~/gurobi.lic fda2e7451a56:/opt/gurobi651/
+grbgetkey 19b2902a-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+```
+
+This command needs to be run in the container to install the license. After you've started an `optimizr` container, get its container ID using `docker ps`, then run the `grbgetkey` command with:
+
+```
+docker exec <container id> grbgetkey 19b2902a-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 You should now be able to use the `gurobi` R package in the Docker container.
